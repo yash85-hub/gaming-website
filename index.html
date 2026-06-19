@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GAMING PLATFORM</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: #0a0f1e;
+      background: linear-gradient(135deg, #0a0f1e 0%, #1a1a3e 50%, #0d1b2a 100%);
+      color: aliceblue;
+    }
+
+    /* Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      padding: 18px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .title1 {
+      font-size: 1.5em;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    nav a {
+      position: relative;
+      color: aliceblue;
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 100%; height: 2px;
+      background: white;
+      border-radius: 4px;
+      transform: scaleX(0);
+      transition: transform 0.35s;
+    }
+    nav a:hover::after { transform: scaleX(1); }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 38vh;
+      padding: 120px 20px 30px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.6);
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 1px;
+    }
+
+    /* Games grid */
+    .games-section {
+      position: relative;
+      z-index: 1;
+      padding: 20px 40px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .card-body {
+      padding: 18px 20px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn-play {
+      flex: 1;
+      padding: 9px 0;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+    .btn-play:hover { background: rgba(255,255,255,0.28); }
+
+    .btn-info {
+      padding: 9px 16px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+    .btn-info:hover { background: rgba(255,255,255,0.1); }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 14px 20px; }
+      .title1 { font-size: 1.1em; }
+      .games-section { padding: 10px 16px 40px; }
+      nav a { margin-left: 16px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2 class="title1">Gaming Platform</h2>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Play. Win. Repeat.</h1>
+    <p>7 classic games — all in your browser, no download needed.</p>
+  </section>
+
+  <section class="games-section">
+    <p class="section-label">Choose a game</p>
+    <div class="grid">
+
+      <a class="card" href="tic_tacinfo.html">
+        <img class="card-img" src="https://tse1.mm.bing.net/th/id/OIP.HoRmgXA8R0mSq2loS85WLwHaHa?pid=Api&P=0&h=220" alt="Tic Tac Toe" />
+        <div class="card-body">
+          <div class="card-title">Tic Tac Toe</div>
+          <div class="card-desc">Classic 3×3 grid. Get three in a row before your opponent does.</div>
+          <div class="card-actions">
+            <a class="btn-play" href="games/tictactoe.html">▶ Play</a>
+            <a class="btn-info" href="tic_tacinfo.html">Rules</a>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="snakeinfo.html">
+        <img class="card-img" src="https://tse1.mm.bing.net/th/id/OIP.XBnY0cPu4mXX5jOZRkcycgHaEU?pid=Api&P=0&h=220" alt="Snake" />
+        <div class="card-body">
+          <div class="card-title">Snake</div>
+          <div class="card-desc">Eat food, grow longer, don't hit the walls or your own tail.</div>
+          <div class="card-actions">
+            <a class="btn-play" href="games/snake.html">▶ Play</a>
+            <a class="btn-info" href="snakeinfo.html">Rules</a>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="sudokoinfo.html">
+        <img class="card-img" src="https://tse1.mm.bing.net/th/id/OIP.fqePCpCDclWnPiAtAFqcNgHaHe?pid=Api&P=0&h=220" alt="Sudoku" />
+        <div class="card-body">
+          <div class="card-title">Sudoku</div>
+          <div class="card-desc">Fill the 9×9 grid so every row, column and box has 1–9 once.</div>
+          <div class="card-actions">
+            <a class="btn-play" href="games/sudoku.html">▶ Play</a>
+            <a class="btn-info" href="sudokoinfo.html">Rules</a>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="flappybirdinfo.html">
+        <img class="card-img" src="https://tse4.mm.bing.net/th/id/OIP.DsXCpr-OqIX2E83P2S7P4QHaHa?pid=Api&P=0&h=220" alt="Flappy Bird" />
+        <div class="card-body">
+          <div class="card-title">Flappy Bird</div>
+          <div class="card-desc">Tap to flap through pipe gaps. One collision and it's over.</div>
+          <div class="card-actions">
+            <a class="btn-play" href="games/flappybird.html">▶ Play</a>
+            <a class="btn-info" href="flappybirdinfo.html">Rules</a>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="slidepuzzleinfo.html">
+        <img class="card-img" src="https://tse1.mm.bing.net/th/id/OIP.HoRmgXA8R0mSq2loS85WLwHaHa?pid=Api&P=0&h=220" alt="Slide Puzzle" />
+        <div class="card-body">
+          <div class="card-title">Slide Puzzle</div>
+          <div class="card-desc">Slide tiles into the correct order using the empty space.</div>
+          <div class="card-actions">
+            <a class="btn-play" href="games/slidepuzzle.html">▶ Play</a>
+            <a class="btn-info" href="slidepuzzleinfo.html">Rules</a>
+          </div>
+        </div>
+      </a>
+
+      <a class="card" href="cromedinoinfo.html">
+        <img class="card-img" src="https://tse1.mm.bing.net/th/id/OIP.HoRmgXA8R0mSq2loS85WLwHaHa?pid=Api&P=0&h=220" alt="Dino Run" />
+        <div class="card-body">
+          <div class="card-title">Dino Run</div>
+          <div class="card-desc">Help the dinosaur jump over cacti and dodge obstacles.</div>
+          <div class="card-actions">
+            <a class="btn-play" href="games/dino.html">▶ Play</a>
+            <a class="btn-info" href="cromedinoinfo.html">Rules</a>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>© 2025 Gaming Platform — All games run locally in your browser.</footer>
+</body>
+</html>
